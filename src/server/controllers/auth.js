@@ -3,6 +3,9 @@ import jwt from 'jsonwebtoken';
 // require('dotenv').config();
 import {config} from 'dotenv';
 config();
+import {User} from '../models/user.js';
+import bcrypt from 'bcryptjs';
+
 const SECRET = process.env.SECRET
 
 export const login = async (req, res) => {
