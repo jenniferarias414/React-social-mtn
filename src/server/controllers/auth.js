@@ -6,12 +6,13 @@ config();
 import {User} from '../models/user.js';
 import bcrypt from 'bcrypt';
 
+
 const SECRET = process.env.SECRET
 
 export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const foundUser = await User.findOne({ where: { username: username } }); //why not also pw:pw?
+    const foundUser = await User.findOne({ where: { username: username } }); 
 
     if (foundUser) {
       const isAuthenticated = bcrypt.compareSync(
@@ -33,10 +34,10 @@ export const login = async (req, res) => {
           exp: exp,
         });
       } else {
-        return res.status(400).send({ message: "Password is incorrect." });
+        return res.status(400).send("Password is incorrect.");
       }
     } else {
-      return res.status(400).send({ message: "User does not exist." });
+      return res.status(400).send("User does not exist.");
     }
   } catch (err) {
     console.error(err);
@@ -50,7 +51,7 @@ export const register = async (req, res) => {
         const foundUser = await User.findOne({ where: { username: username } });
 
         if (foundUser) {
-            return res.status(400).send({message: 'user with this username already exists'})
+            return res.status(400).send('user with this username already exists')
         } else {
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(password, salt);
