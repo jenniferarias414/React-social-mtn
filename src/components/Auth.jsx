@@ -1,6 +1,8 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import AuthContext from "../store/authContext";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Auth = () => {
   const [username, setUsername] = useState("");
@@ -18,6 +20,7 @@ const Auth = () => {
       })
       .catch((err) => {
         console.error(err);
+        toast.error(err.response.data.error || 'An error occurred');
       });
     console.log("submitHandler called");
   };

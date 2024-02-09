@@ -6,6 +6,9 @@ config();
 import {User} from '../models/user.js';
 import bcrypt from 'bcrypt';
 
+// import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
 
 const SECRET = process.env.SECRET
 
@@ -34,13 +37,16 @@ export const login = async (req, res) => {
           exp: exp,
         });
       } else {
-        return res.status(400).send("Password is incorrect.");
+        // toast.error('Password is incorrect.');
+    return res.status(400).send({ error: "Password is incorrect."});
       }
     } else {
-      return res.status(400).send("User does not exist.");
+        // toast.error('User does not exist.');
+      return res.status(400).send({ error: "User does not exist."});
     }
   } catch (err) {
     console.error(err);
+    // toast.error('An error occurred while logging in.');
     res.status(400).send(err);
   }
 }
@@ -51,7 +57,8 @@ export const register = async (req, res) => {
         const foundUser = await User.findOne({ where: { username: username } });
 
         if (foundUser) {
-            return res.status(400).send('user with this username already exists')
+            // toast.error('User with this username already exists.');
+            return res.status(400).send({ error: 'User with this username already exists.'})
         } else {
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(password, salt);
@@ -71,6 +78,7 @@ export const register = async (req, res) => {
         }
     } catch (err) {
         console.error(err)
+        // toast.error('An error occurred while registering.');
         res.status(400).send(err)
     }
 }

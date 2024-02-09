@@ -9,6 +9,9 @@ import Auth from '../components/Auth';
 import Form from '../components/Form';
 import Profile from '../components/Profile';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const App = () => {
 
   const {state} = useContext(AuthContext);
@@ -23,6 +26,7 @@ const App = () => {
         <Route path='/profile' element={state.token ? <Profile/> : <Navigate to='/auth' />}/>
         <Route path='*' element={<Navigate to='/'/>}/>
       </Routes>
+      <ToastContainer />
     </div>
   )
 }
