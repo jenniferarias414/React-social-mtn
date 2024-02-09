@@ -63,11 +63,32 @@ export const getCurrentUserPosts = async (req, res) => {
 }
 
 export const editPost = async (req, res) => {
-    console.log('editPost')
-    res.sendStatus(200)
+    // console.log('editPost')
+    // res.sendStatus(200)
+    try {
+        const {id} = req.params
+        const {status} = req.body
+        await Post.update({privateStatus: status}, {
+            where: {id: +id}
+        })
+        res.sendStatus(200)
+    } catch (error) {
+        console.log('ERROR IN getCurrentUserPosts')
+        console.log(error)
+        res.sendStatus(400)
+    }
 }
 
 export const deletePost = async (req, res) => {
-    console.log('deletePost')
-    res.sendStatus(200)
+    // console.log('deletePost')
+    // res.sendStatus(200)
+    try {
+        const {id} = req.params
+        await Post.destroy({where: {id: +id}})
+        res.sendStatus(200)
+    } catch (error) {
+        console.log('ERROR IN getCurrentUserPosts')
+        console.log(error)
+        res.sendStatus(400)
+    }
 }
